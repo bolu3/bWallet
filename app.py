@@ -46,5 +46,4 @@ def verificacion(n):
         print("'{}' no es un valor correcto. ".format(n))
 
 
-
 ppal()

@@ -1,4 +1,5 @@
 from account import Account
+from app import verificacion
 
 
 def showAccounts(accountList):
@@ -44,7 +45,49 @@ def chooseAccount(accountList):
 def menuCuenta(account):
     centinela = True
     while centinela:
-        print('=' * 25)
-        print('=' * 25)
-        print('=' * 25)
-        print(f'Cuenta: {account.name}')
+        print(f"""
+        =========================
+        =========================
+        =========================
+        Cuenta: {account.name}
+        =========================
+        Dinero disponible: {account.gastable}
+        Dinero ahorrado: {account.ahorro}
+        =========================
+        =========================
+        Lista de transacciones[1]
+        Ingresar Gasto[2]
+        Ingresar Ingreso[3]
+        Gráficos[4]
+        """)
+
+        quehacer = input("Qué querés hacer?: ")
+
+        if verificacion(quehacer) == 1:
+            showTransaccion(account)
+        elif verificacion(quehacer) == 2:
+            addGasto(account)
+        #elif verificacion(quehacer) == 3:
+            #removeAccount(accountList)
+        #elif verificacion(quehacer) == 4:
+            #chooseAccount(account)
+        else:
+            print("Numero no válido")
+
+
+def showTransaccion(account):
+    for x in account.transaccionList:
+        print(x)
+
+#def addGasto(account):
+
+
+
+
+
+
+
+
+
+
+
