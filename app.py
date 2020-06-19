@@ -1,10 +1,18 @@
 from account import Account
 import funcionesCuentas
+import funcionesGenerales
+import informacion
 
 
 def ppal():
     # Main de la app
     accountList = []
+
+    try:
+        informacion.abrirCuentas('data.csv', accountList)
+    except:
+        print("Aun no existe el archivo")
+        mainMenu(accountList)
 
     mainMenu(accountList)
 
@@ -22,31 +30,24 @@ def mainMenu(accountList):
         print("Eliminar Cuenta [3]")
         print("Seleccionar Cuenta [4]")
 
-        quehacer = input("Qué querés hacer?: ")
+        quehacer = funcionesGenerales.verificacion("Qué querés hacer?: ")
 
-        if verificacion(quehacer) == 1:
+        if quehacer == 1:
             funcionesCuentas.showAccounts(accountList)
-        elif verificacion(quehacer) == 2:
+        elif quehacer == 2:
             funcionesCuentas.addAccount(accountList)
-        elif verificacion(quehacer) == 3:
+        elif quehacer == 3:
             funcionesCuentas.removeAccount(accountList)
-        elif verificacion(quehacer) == 4:
+        elif quehacer == 4:
             funcionesCuentas.chooseAccount(accountList)
         else:
             print("Numero no válido")
 
 
-        
+        informacion.guardarCuentas('data.csv',accountList)
 
 
-def verificacion(n):
-    try:
-        return int(n)
-    except ValueError:
-        print("=" * 25)
-        print("=" * 25)
-        print("=" * 25)
-        print("'{}' no es un valor correcto. ".format(n))
+
 
 
 ppal()

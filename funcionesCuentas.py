@@ -1,5 +1,6 @@
 from account import Account
-from app import verificacion
+from funcionesGenerales import verificacion
+
 
 
 def showAccounts(accountList):
@@ -59,28 +60,36 @@ def menuCuenta(account):
         Ingresar Gasto[2]
         Ingresar Ingreso[3]
         Gráficos[4]
+        Volver a Lista de Cuentas[5]
         """)
 
-        quehacer = input("Qué querés hacer?: ")
+        quehacer = verificacion("Que querés hacer?: ")
+        
 
-        if verificacion(quehacer) == 1:
+        if quehacer == 1:
             showTransaccion(account)
-        elif verificacion(quehacer) == 2:
-            addGasto(account)
-        #elif verificacion(quehacer) == 3:
-            #removeAccount(accountList)
-        #elif verificacion(quehacer) == 4:
+        elif quehacer == 2:
+            account.addGasto()
+        elif quehacer == 3:
+            account.addIngreso()
+        #elif quehacer == 4:
             #chooseAccount(account)
         else:
             print("Numero no válido")
 
 
 def showTransaccion(account):
+    #Mostrar la lista de Transacciones de dicha cuenta
     for x in account.transaccionList:
-        print(x)
+        print(f"""
+        {type(x)}  || {x.categoria} || $ {x.monto} || {x.descripcion}  || {x.fecha}
+        """)
 
-#def addGasto(account):
 
+
+
+   
+    
 
 
 
