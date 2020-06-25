@@ -11,8 +11,8 @@ def ppal():
     try:
         informacion.abrirCuentas('data.csv', accountList)
     except:
-        print("Aun no existe el archivo")
-        mainMenu(accountList)
+        print("Aun no existen cuentas")
+        
 
     mainMenu(accountList)
 

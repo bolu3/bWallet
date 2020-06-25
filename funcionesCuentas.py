@@ -1,6 +1,8 @@
 from account import Account
 from funcionesGenerales import verificacion
 
+import informacion
+
 
 
 def showAccounts(accountList):
@@ -8,7 +10,7 @@ def showAccounts(accountList):
         print('No hay cuentas para mostrar')
     else:
         for x in accountList:
-            print(f"Cuenta: {x.name} || Dinero disponible: {x.gastable} || Ahorros: {x.ahorro}.")
+            print(f"Cuenta: {x.name} ")
 
 
 def addAccount(accountList):
@@ -45,6 +47,17 @@ def chooseAccount(accountList):
 
 def menuCuenta(account):
     centinela = True
+
+
+    try:
+        informacion.abrirStatus("%sStatus.csv" % account.name, account)
+    except :
+        print("No se encoentró status actual")
+    
+        
+
+
+    
     while centinela:
         print(f"""
         =========================
@@ -80,9 +93,10 @@ def menuCuenta(account):
 
 def showTransaccion(account):
     #Mostrar la lista de Transacciones de dicha cuenta
+    informacion.abrirTransacciones("%sTransacciones.csv" % account.name, account)
     for x in account.transaccionList:
         print(f"""
-        {type(x)}  || {x.categoria} || $ {x.monto} || {x.descripcion}  || {x.fecha}
+        {x.categoria} || $ {x.monto} || {x.descripcion}  || {x.fecha}
         """)
 
 

@@ -23,7 +23,7 @@ class Account:
 
         categoria = input("Ingrese la categoria del gasto: ")
         descripcion = input("Breve descripcion del gasto: ")
-        monto = verificacion("Monto: ")
+        monto = -verificacion("Monto: ")
         fecha = verificacion("probando fecha:")
 
         gasto = Gasto(categoria, descripcion, monto, fecha)
@@ -31,9 +31,10 @@ class Account:
 
         self.gastable = int(self.gastable) #Tengo que cambiarlo, ya que me lo devuelve como string.. todavía no se porque
 
-        self.gastable -= monto #Actualiza la cantidad de dinero gastable de dicha cuenta
+        self.gastable += monto #Actualiza la cantidad de dinero gastable de dicha cuenta
 
-        guardarTransacciones("%s.csv" % self.name ,gasto)
+        guardarTransacciones("%sTransacciones.csv" % self.name ,gasto)
+        guardarStatus("%sStatus.csv" % self.name, self)
 
     def addIngreso(self):
         # Agregar un ingreso a la cuenta cuenta
@@ -57,13 +58,23 @@ class Account:
         self.ahorro += ingreso.monto * taxdeahorro  # Suma una cantidad X de plata al atributo de ahorro
         self.gastable += ingreso.monto * (1 - taxdeahorro)  # Suma una cantidad X de plata al atributo de gastable
 
-        guardarTransacciones("%s.csv" % self.name,ingreso)
+        guardarTransacciones("%sTransacciones.csv" % self.name,ingreso)
+        guardarStatus("%sStatus.csv" % self.name, self)
 
     def getName(self):
         return self.name
     
 def guardarTransacciones(nombreArchivo, transaccion):
+    #Guardar las transacciones en un archivo csv.
     with open(nombreArchivo, 'a') as archivo:
         archivo_csv = csv.writer(archivo)
-        archivo_csv.writerow((type(transaccion),transaccion.categoria,transaccion.descripcion,transaccion.monto,transaccion.fecha))
-  
+        archivo_csv.writerow((transaccion.categoria,transaccion.descripcion,transaccion.monto,transaccion.fecha))
+
+
+
+def guardarStatus(nombreArchivo,account):
+    #Guardar el status de una cuenta. El dinero ahorrado y el permitdo para gastar.
+    with open(nombreArchivo, 'w') as file:
+        archivo_csv = csv.writer(file)
+        archivo_csv.writerow((account.gastable, account.ahorro))
+
