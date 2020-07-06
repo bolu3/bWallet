@@ -1,64 +1,63 @@
-from transacciones import Ingreso
-from transacciones import Gasto
-from funcionesGenerales import verificacion, verificacionFloat
+from transactions import Ingreso
+from transactions import Gasto
+from functionsGeneral import verificacion, verificacionFloat
 import csv
 
 
 class Account:
     # Representation of an Account
 
-    def __init__(self, name, ahorro=0, gastable=0, transaccionList=None):
-        # Constructor de una cuenta
+    def __init__(self, name, savings=0, expendable=0, transaccionList=None):
+        # Account constructor
 
         self.name = name
-        self.ahorro = ahorro
-        self.gastable = gastable
+        self.savings = savings
+        self.expendable = expendable
         if transaccionList is None:
             transaccionList = []
         self.transaccionList = transaccionList
 
     def addGasto(self):
-        # Agregar un Gasto en una cuenta determinada y realización de operaciones para actualizar los datos
-        # de la cuenta.
+        # Add an expese to a certain account. And process the information
 
-        categoria = input("Ingrese la categoria del gasto: ")
-        descripcion = input("Breve descripcion del gasto: ")
-        monto = -verificacion("Monto: ")
-        fecha = verificacion("probando fecha:")
+        category = input("Ingrese la categoria del gasto: ")
+        description = input("Breve descripcion del gasto: ")
+        amount = -verificacion("Monto: ")
+        date = verificacion("probando fecha:")
 
-        gasto = Gasto(categoria, descripcion, monto, fecha)
-        self.transaccionList.append(gasto)
+        expense = Gasto(category, description, amount, date)
+        self.transaccionList.append(expense)
 
-        self.gastable = int(
-            self.gastable)  # Tengo que cambiarlo, ya que me lo devuelve como string.. todavía no se porque
+        self.expendable = int(
+            self.expendable)
 
-        self.gastable += monto  # Actualiza la cantidad de dinero gastable de dicha cuenta
+        self.expendable += amount
 
-        guardarTransacciones("%sTransacciones.csv" % self.name, gasto)
+        guardarTransacciones("%sTransacciones.csv" % self.name, expense)
         guardarStatus("%sStatus.csv" % self.name, self)
 
     def addIngreso(self):
-        # Agregar un ingreso a la cuenta cuenta y realizacion de ... addGasto.
+        # Add an income
 
-        categoria = input("Ingrese la categoria del ingreso: ")
-        descripcion = input("Breve descripcion del ingreso: ")
-        monto = verificacion("Monto: ")
-        fecha = verificacion("probando fecha: ")
+        category = input("Ingrese la categoria del ingreso: ")
+        description = input("Breve descripcion del ingreso: ")
+        amount = verificacion("Monto: ")
+        date = verificacion("probando fecha: ")
 
-        ingreso = Ingreso(categoria, descripcion, monto, fecha)
-        self.transaccionList.append(ingreso)  # Suma un ingreso a la lista de transacciones
+        income = Ingreso(category, description, amount, date)
+        self.transaccionList.append(income)  # Add income to transaction list
 
-        taxdeahorro = verificacionFloat("Porcentaje del sueldo a ahorrar: ")
-        taxdeahorro /= 100
+        taxSavings = verificacionFloat("Porcentaje del sueldo a ahorrar: ")
+        taxSavings /= 100
 
-        self.ahorro = int(self.ahorro)  # Este también me lo devuelve como string y no se porque..
-        self.gastable = int(
-            self.gastable)  # Tengo que cambiarlo, ya que me lo devuelve como string.. todavía no se porque
+        self.savings = int(self.savings)
+        self.expendable = int(
+            self.expendable)
 
-        self.ahorro += ingreso.monto * taxdeahorro  # Suma una cantidad X de plata al atributo de ahorro
-        self.gastable += ingreso.monto * (1 - taxdeahorro)  # Suma una cantidad X de plata al atributo de gastable
+        self.savings += income.amount * taxSavings
+        self.expendable += income.amount * (1 - taxSavings)
 
-        guardarTransacciones("%sTransacciones.csv" % self.name, ingreso)
+        guardarTransacciones("%sTransacciones.csv" % self.name, income)
         guardarStatus("%sStatus.csv" % self.name, self)
 
     def getName(self):
@@ -66,14 +65,14 @@ class Account:
 
 
 def guardarTransacciones(nombreArchivo, transaccion):
-    # Guardar las transacciones en un archivo csv.
+    # Save transaction in a csv
     with open(nombreArchivo, 'a') as archivo:
         archivo_csv = csv.writer(archivo)
-        archivo_csv.writerow((transaccion.categoria, transaccion.descripcion, transaccion.monto, transaccion.fecha))
+        archivo_csv.writerow((transaccion.category, transaccion.description, transaccion.amount, transaccion.date))
 
 
 def guardarStatus(nombreArchivo, account):
-    # Guardar el status de una cuenta. El dinero ahorrado y el permitdo para gastar.
+    # Save status of a certain account
     with open(nombreArchivo, 'w') as file:
         archivo_csv = csv.writer(file)
-        archivo_csv.writerow((account.gastable, account.ahorro))
+        archivo_csv.writerow((account.expendable, account.savings))

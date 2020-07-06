@@ -1,14 +1,14 @@
-import funcionesCuentas
-import funcionesGenerales
-import informacion
+import functionsAccount
+import functionsGeneral
+import information
 
 
 def ppal():
-    # Main de la app
+    # Apps main
     accountList = []
 
     try:
-        informacion.abrirCuentas('data.csv', accountList)
+        information.abrirCuentas('data.csv', accountList)
     except IOError:
         print("Aun no existen cuentas")
 
@@ -16,38 +16,38 @@ def ppal():
 
 
 def mainMenu(accountList):
-    # Es el menu de la app, para ver que acciones realizar
+    # Main menu
     while True:
         print("=" * 25)
         print("=" * 25)
         print("=" * 25)
         print("Menu  ")
         print("=" * 25)
-        print("Ver cuentas [1]")
-        print("Agregar Cuenta [2]")
-        print("Eliminar Cuenta [3]")
-        print("Seleccionar Cuenta [4]")
+        print("Accounts [1]")
+        print("Add Account [2]")
+        print("Remove Account [3]")
+        print("Select Account [4]")
 
-        quehacer = funcionesGenerales.verificacion("Qué querés hacer?: ")
+        whatToDo = functionsGeneral.verificacion("Next Step?: ")
 
         # Lista del menu para hacer las diferentes acciones.
-        if quehacer == 1:
-            funcionesCuentas.showAccounts(accountList)
-        elif quehacer == 2:
-            funcionesCuentas.addAccount(accountList)
-        elif quehacer == 3:
-            funcionesCuentas.removeAccount(accountList)
-        elif quehacer == 4:
+        if whatToDo == 1:
+            functionsAccount.showAccounts(accountList)
+        elif whatToDo == 2:
+            functionsAccount.addAccount(accountList)
+        elif whatToDo == 3:
+            functionsAccount.removeAccount(accountList)
+        elif whatToDo == 4:
             chooseAccount(accountList)
         else:
-            print("Numero no válido")
+            print("Non valid number")
 
-        informacion.guardarCuentas('data.csv', accountList)
+        information.guardarCuentas('data.csv', accountList)
 
 
 def chooseAccount(accountList):
-    # Elegir un cuenta dentro de las que salen de Ver cuentas
-    name = input('Cuenta a ingresar: ')
+    # Choose an account, inside accountlist[]
+    name = input('Account: ')
     i = 0
     for x in accountList:
         if name == x.name:
@@ -55,53 +55,52 @@ def chooseAccount(accountList):
         else:
             i += 1
     if i > (len(accountList) - 1):
-        print(f'{name} no se encuentra en la lista')
+        print(f'{name} does not exist.')
 
 
 def menuCuenta(account):
-    # Este es el menu de inicio de la cuenta. Donde se van a poder ver los ahorras, realizar las diferentes acciones
-    # como ingresar gastos e ingresos, y tambien poder elegir el procesamiento de los datos.
+    # Menu of a particular account.
     centinela = True
 
     try:
-        informacion.abrirStatus("%sStatus.csv" % account.name, account)
+        information.abrirStatus("%sStatus.csv" % account.name, account)
     except IOError:
-        print("No se encoentró status actual")
+        print("No current status")
 
     while centinela:
         print(f"""
         =========================
         =========================
         =========================
-        Cuenta: {account.name}
+        Account: {account.name}
         =========================
-        Dinero disponible: {account.gastable}
-        Dinero ahorrado: {account.ahorro}
+        Expendable: {account.expendable}
+        Savings: {account.savings}
         =========================
         =========================
-        Lista de transacciones[1]
-        Ingresar Gasto[2]
-        Ingresar Ingreso[3]
-        Gráficos[4]
-        Volver a Lista de Cuentas[5]
+        Transaction List[1]
+        Add Expense[2]
+        Add income[3]
+        Graphics[4]
+        Back to Account Menu[5]
         """)
 
-        quehacer = funcionesCuentas.verificacion("Que querés hacer?: ")
+        whatToDo = functionsGeneral.verificacion("Next Step?: ")
 
-        if quehacer == 1:
-            funcionesCuentas.showTransaccion(account)
-        elif quehacer == 2:
+        if whatToDo == 1:
+            functionsAccount.showTransaccion(account)
+        elif whatToDo == 2:
             account.addGasto()
-        elif quehacer == 3:
+        elif whatToDo == 3:
             account.addIngreso()
         # elif quehacer == 4:
         # chooseAccount(account)
-        elif quehacer == 5:
+        elif whatToDo == 5:
             centinela = False
         else:
-            print("Numero no válido")
+            print("Non valid number")
 
-        ppal()
+    ppal()
 
 
 ppal()

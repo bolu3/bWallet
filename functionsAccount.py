@@ -1,28 +1,26 @@
+import information
 from account import Account
-from funcionesGenerales import verificacion
-
-import informacion
 
 
 def showAccounts(accountList):
     # Function used to read current accounts.
     if not accountList:
-        print('No hay cuentas para mostrar')
+        print('No accounts to show')
     else:
         for x in accountList:
-            print(f"Cuenta: {x.name} ")
+            print(f"Account: {x.name} ")
 
 
 def addAccount(accountList):
     # Add an account to the account list.
-    name = input('Ingrese alias de nueva cuenta: ')
+    name = input('New accounts name: ')
     account = Account(name)
     accountList.append(account)
 
 
 def removeAccount(accountList):
     # Remove an account of the account list (The account name must exist)
-    name = input('Ingrese alias de cuenta a eliminar: ')
+    name = input('Name of account to remove: ')
     i = 0
 
     for x in accountList:
@@ -32,13 +30,13 @@ def removeAccount(accountList):
         else:
             i += 1
     if i > (len(accountList) - 1):
-        print(f'{name} no se encuentra en la lista')
+        print(f'{name} is not in the list.')
 
 
 def showTransaccion(account):
     # Show transactions list of a specific account
-    informacion.abrirTransacciones("%sTransacciones.csv" % account.name, account)
+    information.abrirTransacciones("%sTransacciones.csv" % account.name, account)
     for x in account.transaccionList:
         print(f"""
-        {x.categoria} || $ {x.monto} || {x.descripcion}  || {x.fecha}
+        {x.category} || $ {x.amount} || {x.description}  || {x.date}
         """)

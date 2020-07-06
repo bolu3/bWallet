@@ -1,5 +1,6 @@
 def verificacion(prompt):
-    while True:    
+    # Int verification fucntions
+    while True:
         try:
             value = int(input(prompt))
         except ValueError:
@@ -10,7 +11,9 @@ def verificacion(prompt):
             continue
         return value
 
+
 def verificacionFloat(prompt):
+    # Float verifcation function
     while True:
         try:
             value = float(input(prompt))
