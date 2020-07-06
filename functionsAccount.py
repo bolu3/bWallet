@@ -5,8 +5,7 @@ import informacion
 
 
 def showAccounts(accountList):
-    # Funciñon para leer las cuentas. No necesita leer el archivo donde se guardan las cuentas, ya que al iniciarse
-    # el programa se cargan las cuentas conlos datos pertinentes.
+    # Function used to read current accounts.
     if not accountList:
         print('No hay cuentas para mostrar')
     else:
@@ -15,14 +14,14 @@ def showAccounts(accountList):
 
 
 def addAccount(accountList):
-    # Agregar una cuenta a la lista de cuentas.
+    # Add an account to the account list.
     name = input('Ingrese alias de nueva cuenta: ')
     account = Account(name)
     accountList.append(account)
 
 
 def removeAccount(accountList):
-    # Remover una cuenta(elegida por el usuario) de la lista de cuentas.
+    # Remove an account of the account list (The account name must exist)
     name = input('Ingrese alias de cuenta a eliminar: ')
     i = 0
 
@@ -37,7 +36,7 @@ def removeAccount(accountList):
 
 
 def showTransaccion(account):
-    # Mostrar la lista de Transacciones de dicha cuenta
+    # Show transactions list of a specific account
     informacion.abrirTransacciones("%sTransacciones.csv" % account.name, account)
     for x in account.transaccionList:
         print(f"""

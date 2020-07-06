@@ -29,17 +29,17 @@ def abrirTransacciones(nombreArchivo, account):
         item = next(reader, None)
 
         while item:
-            categoria = item[0]
-            descripcion = item[1]
+            category = item[0]
+            description = item[1]
             monto = int(item[2])
-            fecha = item[3]
+            date = item[3]
 
             if monto > 0:
-                ingreso = transacciones.Ingreso(categoria, descripcion, monto, fecha)
-                account.transaccionList.append(ingreso)
+                income = transacciones.Ingreso(category, description, monto, date)
+                account.transaccionList.append(income)
             else:
-                gasto = transacciones.Gasto(categoria,descripcion,monto,fecha)
-                account.transaccionList.append(gasto)
+                expense = transacciones.Gasto(category, description, monto, date)
+                account.transaccionList.append(expense)
 
             item = next(reader, None)
 
